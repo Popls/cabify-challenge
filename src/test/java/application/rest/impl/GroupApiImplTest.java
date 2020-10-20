@@ -38,7 +38,7 @@ public class GroupApiImplTest {
     ResponseEntity<CarDto> responseEntity = groupApi.postLocate(1);
     verify(groupService,times(1)).locate(any());
     verify(carDtoMapper,times(1)).toCarDto(any());
-    assertEquals(ResponseEntity.accepted().body(carDtoExpected), responseEntity);
+    assertEquals(ResponseEntity.ok().body(carDtoExpected), responseEntity);
   }
 
   @Test
