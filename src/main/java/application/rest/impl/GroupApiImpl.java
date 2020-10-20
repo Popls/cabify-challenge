@@ -29,7 +29,7 @@ public class GroupApiImpl implements LocateApi, DropoffApi {
 
   @Override
   public ResponseEntity<CarDto> postLocate(Integer ID) {
-    return ResponseEntity.accepted().body(
+    return ResponseEntity.ok().body(
         carDtoMapper.toCarDto(groupService.locate(Group.builder().id(ID).build()))
     );
   }
