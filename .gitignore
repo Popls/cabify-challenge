@@ -1,0 +1,11 @@
+.classpath
+.project
+target/
+bin/
+.settings/
+.idea/
+*.iml
+full-stack/
+/target/
+/src/main/java/application/rest/spec/
+/src/main/java/application/dto/
