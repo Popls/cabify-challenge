@@ -1,0 +1,145 @@
+swagger: "2.0"
+info:
+  title: Carpooling API
+  description: API to control the Carpooling data.
+  version: 1.0.0
+host: "localhost"
+schemes:
+  - https
+paths:
+  /status:
+    get:
+      operationId: getStatus
+      tags:
+        - "App"
+      summary: "Return the system status."
+      responses:
+        200:
+          description: "OK"
+
+  /cars:
+    put:
+      operationId: putCars
+      tags:
+        - "Cars"
+      summary: "Restart the information about cars."
+      consumes:
+        - application/json
+      parameters:
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: '#/definitions/CarList'
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Bad request"
+
+  /journey:
+    post:
+      operationId: postJourney
+      tags:
+        - "Journey"
+      summary: "Save a group to assign to a car."
+      consumes:
+        - application/json
+      parameters:
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: '#/definitions/Group'
+      responses:
+        200:
+          description: "Ok"
+        202:
+          description: "Accepted"
+        400:
+          description: "Bad request"
+
+  /dropoff:
+    post:
+      operationId: postDropoff
+      tags:
+        - "Journey"
+      summary: "Remove a group from a journey."
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: ID
+          type: integer
+          required: true
+          description: "Group identification"
+      responses:
+        200:
+          description: "Ok"
+        204:
+          description: "No content"
+        400:
+          description: "Bad request"
+        404:
+          description: "Not found"
+
+  /locate:
+    post:
+      operationId: postLocate
+      tags:
+        - "Group"
+      summary: "Locate a group."
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: ID
+          type: integer
+          required: true
+          description: "Group identification"
+      responses:
+        200:
+          schema:
+            $ref: '#/definitions/Car'
+          description: "Ok"
+        204:
+          description: "No content"
+        400:
+          description: "Bad request"
+        404:
+          description: "Not found"
+
+definitions:
+
+  CarList:
+    type: array
+    items:
+      $ref: '#/definitions/Car'
+
+  Car:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "The car identification."
+      seats:
+        type: integer
+        description: "Number of seats that the car has."
+    required:
+      - id
+      - seats
+
+  Group:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "The group identification."
+      people:
+        type: integer
+        description: "Number of people in the group."
+    required:
+      - id
+      - people
